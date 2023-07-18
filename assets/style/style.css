@@ -102,3 +102,43 @@ footer button{
     
     
 }
+
+/* PAGINA TEST STILE */
+
+.griglia{
+    display: grid;
+    grid-template: 100px 100px / 400px 400px;
+    gap: 48px;
+    justify-content: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 4rem;
+}
+#domanda{
+    margin-bottom: 48px;
+}
+
+.answer {
+    border-radius: 50px;
+    position: relative;
+    background: rgba(255,255,255,.5);
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.answer:after {
+    content: '';
+    border-radius: 50px;
+    position: absolute;
+    top: -2px; right: -2px; bottom: -2px; left: -2px;
+    background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
+    z-index: -1;
+}

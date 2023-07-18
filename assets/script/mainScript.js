@@ -1,6 +1,6 @@
 window.onload = function(){
     const checkbox = document.querySelector("input[type=checkbox]");
-    const proceedButton = document.querySelector("button");
+    const proceedButton = document.querySelector("#procedi");
 
     proceedButton.disabled = true; // disabilita il pulsante all'avvio
 
