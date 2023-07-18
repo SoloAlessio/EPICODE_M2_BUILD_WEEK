@@ -83,6 +83,13 @@ footer .checkbox{
     background-color: transparent;
     border: 2px solid #fff;
     border-radius: 0px;
+    transition: all .2s;
+    cursor: pointer;
+}
+.checkbox input:checked{
+    background-color: #00ffff;
+    border-radius: 50%;
+    border: 2px solid #fff;
 }
 footer button{
     background-color: #00ffff;
