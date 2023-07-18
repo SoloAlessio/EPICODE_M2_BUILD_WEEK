@@ -9,6 +9,6 @@ window.onload = function(){
     };
 
     proceedButton.onclick = function(){ // evento che si attiva quando il pulsante viene cliccato
-        window.location.href = "https://www.google.com/"; // reindirizza a Google ricordiamoci di cambiarlo
+        window.location.href = "test.html"; // reindirizza a Google ricordiamoci di cambiarlo
     };
 }
