@@ -105,7 +105,7 @@ footer button{
 
 /* PAGINA TEST STILE */
 
-.griglia{
+#griglia{
     display: grid;
     grid-template: 100px 100px / 400px 400px;
     gap: 48px;
@@ -119,11 +119,11 @@ footer button{
     align-items: center;
     margin-bottom: 4rem;
 }
-#domanda{
+#question{
     margin-bottom: 48px;
 }
 
-.answer {
+#griglia button {
     border-radius: 50px;
     position: relative;
     background: rgba(255,255,255,.5);
@@ -134,7 +134,7 @@ footer button{
     outline: none;
 }
 
-.answer:after {
+#griglia button:after {
     content: '';
     border-radius: 50px;
     position: absolute;
