@@ -108,7 +108,7 @@ window.onload = function () {
 
     const griglia = document.getElementById("griglia");
     const titolo = document.getElementById("question");
-    const contatore = document.getElementById("counter");
+    const contatore = document.getElementById("question-number");
     let currentQuestionIndex = 0;
     let risposteEsistenti = null;
 
@@ -165,7 +165,7 @@ window.onload = function () {
           currentQuestionIndex++;
           
           if (currentQuestionIndex <= 9){
-            contatore.innerHTML = "Question: " + parseInt(currentQuestionIndex + 1) + "/10";
+            contatore.innerHTML = parseInt(currentQuestionIndex + 1);
           }
 
           if (currentQuestionIndex < questions.length) {
