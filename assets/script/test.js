@@ -98,56 +98,52 @@ const questions = [
     },
   ];
 
+
+let score = 0;
 // Definizione della funzione generateQuestions
 window.onload = function(){
-
+    
     function generateQuestions() {
 
         const griglia = document.getElementById("griglia");
         const titolo = document.getElementById("question");
         const contatore = document.getElementById("counter");
-        let array;
-        let score = 0;
-        let answerButtons;
-        
         let currentQuestionIndex = 0;
+        let risposteEsistenti = null;
     
         // Funzione per mostrare una domanda e le risposte corrispondenti
         function showQuestion() {
             // Ottieni la domanda corrente
             const domanda = questions[currentQuestionIndex];
-            array = griglia.children;
-            answerButtons = griglia.children;
-            // Rimuovi tutti i pulsanti di risposta
-            for (let i = 0; i < array.length; i++) { // QUI è IL PROBLEMA GROSSO!!!
-                array[i].remove();
-            }
-            
+            const answers = [domanda.correct_answer, ...domanda.incorrect_answers];
+
+                      
             // Mostra la domanda
             titolo.innerText = domanda.question;
     
             // Ottieni le risposte (corrette e sbagliate)
-            const answers = [domanda.correct_answer, ...domanda.incorrect_answers];
-
             for (let i = 0; i < answers.length ; i++) {
-                let element = document.createElement('button');
-                element.id = "answer" + (i+1);
-                griglia.appendChild(element);
+                let risposta = document.createElement('button');
+                risposta.classList.add("risposta");
+                risposta.textContent = answers[i];
+                griglia.appendChild(risposta);
             }
-            
+
+            risposteEsistenti = document.querySelectorAll(".risposta");
+
             // Mostra le risposte sui pulsanti
             answers.forEach((answer, index) => {
-                const answerButton = answerButtons[index];
-                answerButton.textContent = answer;
+                const answerButton = risposteEsistenti[index];
                 answerButton.onclick = function() {
                     // Controlla se la risposta Ã¨ corretta e mostra un messaggio di allerta appropriato
                     if (answer === domanda.correct_answer) {
-                        alert('Corretto!');
                         score++;
                     } else {
-                        alert('Sbagliato!');
+                        
                     }
                     // Passa alla prossima domanda
+                    risposteEsistenti.forEach(answer => answer.remove());
+
                     currentQuestionIndex++;
                     contatore.innerHTML = "Question: " + parseInt(currentQuestionIndex+1) + "/10";
                     if (currentQuestionIndex < questions.length) {
@@ -155,9 +151,11 @@ window.onload = function(){
                         showQuestion();
                     } else {
                         // Altrimenti, mostra un messaggio di fine quiz
-                        alert('Quiz finito! - risposte corrette: ' + score + "/10");
+                        window.location.href = "score.html";
                     }
+                    
                 };
+                
             });
             
         }
@@ -166,9 +164,8 @@ window.onload = function(){
         showQuestion();
         
     };
-     
-    generateQuestions();  
+    
+    generateQuestions(); 
+    
 }
-
-
 
