@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Outfit:wght@100;200;300;400;500;600;700&display=swap');
 
-*,*:before,*:after{
+*,
+*:before,
+*:after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
+
+body {
     font-family: 'Outfit', sans-serif;
     font-size: 16px;
     background-image: url(/assets/images/assets/bg.jpg);
@@ -17,66 +20,75 @@ body{
     margin: 4rem 10%;
     overflow: hidden;
 }
-.bold{
+
+.bold {
     font-weight: 700;
 }
-header{
+
+header {
     display: block;
     height: 48px;
     margin-bottom: 6rem;
 }
-.logo{
+
+.logo {
     background-image: url(/assets/images/assets/epicode_logo.png);
     background-position: center;
     background-size: cover;
     height: 100%;
     width: 15%;
 }
-main{
+
+main {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: left;
     margin-bottom: 4rem;
 }
-#title{
+
+#title {
     font-size: 100px;
     font-weight: 400;
     max-width: 50%;
     line-height: 0.75;
     margin-bottom: 4rem;
 }
-.subtitle{
+
+.subtitle {
     color: #d20094;
     font-size: 32px;
     margin-bottom: .5rem;
 }
-.description{
+
+.description {
     font-family: 'Inter', sans-serif;
 }
-.description p{
+
+.description p {
     font-size: 20px;
     font-weight: 300;
     margin-bottom: 4rem;
 }
-.description .rules li{
+
+.description .rules li {
     margin-bottom: 4px;
     margin-left: 48px;
     font-size: 20px;
     font-weight: 300;
 }
 
-footer{
+footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-footer .checkbox{
+footer .checkbox {
     display: flex;
     gap: 16px;
 }
-.checkbox input{
+
+.checkbox input {
     appearance: none;
     width: 20px;
     height: 20px;
@@ -86,12 +98,14 @@ footer .checkbox{
     transition: all .2s;
     cursor: pointer;
 }
-.checkbox input:checked{
+
+.checkbox input:checked {
     background-color: #00ffff;
     border-radius: 50%;
     border: 2px solid #fff;
 }
-footer button{
+
+footer button {
     background-color: #00ffff;
     padding: 1.25rem 4rem;
     font-size: 24px;
@@ -99,46 +113,66 @@ footer button{
     border: none;
     box-shadow: 0 0 24px #00ffff;
     cursor: pointer;
-    
-    
+
+
 }
 
 /* PAGINA TEST STILE */
 
-#griglia{
+#griglia {
     display: grid;
     grid-template: 100px 100px / 400px 400px;
     gap: 48px;
     justify-content: center;
 }
 
-.container{
+.container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 4rem;
 }
-#question{
+
+#question {
     margin-bottom: 48px;
+    text-align: center;
+    max-width: 50%;
 }
 
 #griglia button {
-    border-radius: 50px;
-    position: relative;
-    background: rgba(255,255,255,.5);
-    border: none;
+    background: rgba(255, 255, 255, .05);
     padding: 10px 20px;
     color: white;
     cursor: pointer;
     outline: none;
+    backdrop-filter: blur(20px);
+    font-size: 18px;
+    font-weight: 700;
+    border: 2px solid;
+    border-image: round;
+    border-radius: 50px;
+    transition: all .2s;
+}
+#griglia button:hover{
+    background-color: #900080;
 }
 
-#griglia button:after {
-    content: '';
-    border-radius: 50px;
-    position: absolute;
-    top: -2px; right: -2px; bottom: -2px; left: -2px;
-    background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
-    z-index: -1;
+#counter span {
+    color: #d20094;
+}
+
+.center {
+    justify-content: center;
+}
+.main-score{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#score{
+    font-size: 70px;
+    margin-top: 24px;
 }
