@@ -30,7 +30,7 @@ header{
     background-position: center;
     background-size: cover;
     height: 100%;
-    width: 15%;
+    width: auto;
 }
 main{
     display: flex;
@@ -102,6 +102,9 @@ footer button{
     
     
 }
+.test-footer{
+    justify-content: center;
+}
 
 /* PAGINA TEST STILE */
 
@@ -126,7 +129,7 @@ footer button{
 .answer {
     border-radius: 50px;
     position: relative;
-    background: rgba(255,255,255,.5);
+    background: rgb(37, 18, 82);
     border: none;
     padding: 10px 20px;
     color: white;
