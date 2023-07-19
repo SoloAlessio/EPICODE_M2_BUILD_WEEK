@@ -151,7 +151,12 @@ window.onload = function(){
                         showQuestion();
                     } else {
                         // Altrimenti, mostra un messaggio di fine quiz
-                        window.location.href = "score.html";
+                        // Andiamo  a salvare in ucassetto del browser il nostro valore 
+                        sessionStorage.setItem("score", score)
+
+                        // dallaltra parte
+                        
+                       window.location.href = "score.html";
                     }
                     
                 };
