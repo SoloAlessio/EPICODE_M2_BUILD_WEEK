@@ -103,17 +103,20 @@ let score = 0;
 let currentQuestionIndex = 0;
 let risposteEsistenti = null;
 
+
 function showQuestion() {
+  console.log(currentQuestionIndex);
 
   const domanda = questions[currentQuestionIndex];
   const answers = [domanda.correct_answer, ...domanda.incorrect_answers];
-  const contatore = document.getElementById("question-number");
   const griglia = document.getElementById("griglia");
   const titolo = document.getElementById("question");
+  const contatore = document.getElementById("question-number");
 
   shuffle(answers)
 
   titolo.innerText = domanda.question;
+  contatore.innerHTML = currentQuestionIndex + 1;
 
   // Ottieni le risposte (corrette e sbagliate)
   for (let i = 0; i < answers.length; i++) {
@@ -129,24 +132,18 @@ function showQuestion() {
   answers.forEach((answer, index) => {
     const answerButton = risposteEsistenti[index];
     answerButton.onclick = function () {
-      // Controlla se la risposta Ã¨ corretta e mostra un messaggio di allerta appropriato
+      // Controlla se la risposta Ã¨ corretta
       if (answer === domanda.correct_answer) {
         score++;
-      } else {
-
-      }
+      } 
       // Passa alla prossima domanda
       risposteEsistenti.forEach(answer => answer.remove());
-      currentQuestionIndex++;
-      console.log(currentQuestionIndex);
 
-      if (currentQuestionIndex <= 9) {
-        contatore.innerHTML = parseInt(currentQuestionIndex + 1);
-      }
-
-      if (currentQuestionIndex < questions.length) {
+      if (currentQuestionIndex < questions.length - 1) {
         // Se ci sono ancora domande, mostra la prossima domanda
+        currentQuestionIndex++;
         showQuestion();
+        clearTime();
         //reimposta countdown
       } else {
         // Altrimenti, mostra un messaggio di fine quiz
@@ -185,9 +182,97 @@ function generateQuestions() {
 
 };
 
+const FULL_DASH_ARRAY = 283;
+const WARNING_THRESHOLD = 10;
+const ALERT_THRESHOLD = 5;
+
+const TIME_LIMIT = 20;
+let timePassed = 0;
+let timeLeft = TIME_LIMIT;
+let timerInterval = null;
+
+function clearTime(){
+  timePassed = -1;
+  timeLeft = TIME_LIMIT;
+  timerInterval = null;
+}
+
+function onTimesUp() {
+  if(currentQuestionIndex != 9){
+    risposteEsistenti.forEach(answer => answer.remove());
+    currentQuestionIndex++;
+    generateQuestions();
+  } else{
+    sessionStorage.setItem("score", score)
+    window.location.href = "score.html";
+  }
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timePassed = timePassed += 1;
+    timeLeft = TIME_LIMIT - timePassed;
+    document.getElementById("base-timer-label").innerHTML = "<div class='text'>SECONDS</div>" + formatTime(timeLeft) + "<div class='text'>REMAINING</div>";
+    setCircleDasharray();
+
+    if (timeLeft === 0) {
+      clearTime();
+      onTimesUp();
+    }
+  }, 1000);
+}
+
+function formatTime(time) {
+  const minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+
+  return `${seconds}`;
+}
+
+function calculateTimeFraction() {
+  const rawTimeFraction = timeLeft / TIME_LIMIT;
+  return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+}
+
+function setCircleDasharray() {
+  const circleDasharray = `${(
+    calculateTimeFraction() * FULL_DASH_ARRAY
+  ).toFixed(0)} 283`;
+  document
+    .getElementById("base-timer-path-remaining")
+    .setAttribute("stroke-dasharray", circleDasharray);
+}
 
 window.onload = function () {
 
+  document.getElementById("app").innerHTML = `
+<div class="base-timer">
+  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="base-timer__circle">
+      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+      <path
+        id="base-timer-path-remaining"
+        stroke-dasharray="283"
+        class="base-timer__path-remaining"
+        d="
+          M 50, 50
+          m -45, 0
+          a 45,45 0 1,0 90,0
+          a 45,45 0 1,0 -90,0
+        "
+      ></path>
+    </g>
+  </svg>
+  <span id="base-timer-label" class="base-timer__label"> 
+      ${formatTime(timeLeft)} 
+  </span>
+</div>
+`;
   generateQuestions();
+  startTimer();
 
 }
