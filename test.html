@@ -6,119 +6,13 @@
     <link rel="stylesheet" href="assets/style/style.css">
     <title>BUILD WEEK</title>
     <script src="assets/script/test.js"></script>
-    <style>
-    canvas{
-        border: 1px solid transparent;
-        border-radius: 50%;
-        background-color: transparent;
-      }
-    </style>
+    
 </head>
 <body>
+
     <header>
         <a href="index.html"><img src="assets/images/assets/epicode_logo.png" class="logo"></img></a>
-        <canvas id="countdownCanvas" width="200" height="200"></canvas>
-        <script>
-            //variabili
-            const canvas = document.getElementById("countdownCanvas");
-            const ctx = canvas.getContext("2d"); //variabile che ci permette di disegnare sul cerchio
-            const radius = canvas.width / 2; //raggio del cerchio
-            const center = { x: canvas.width / 2, y: canvas.height / 2 }; //coordinate del cerchio
-            const second = 10; //countdown
-            const countdownDuration = 1000 * second; //totale countdown
-            let remaningTime = countdownDuration; //tempo che rimane del countdown
-            let animationId;
-            let startTime = 0;
-
-            canvas.addEventListener("animationiteration", onCountdownEnd);
-      
-            //funzione del cerchio
-            function drawCircle(progress) {
-              ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-              //disegno del cerchio
-              ctx.beginPath();
-              ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI);
-              ctx.strokeStyle = "#00FFFF";
-              ctx.lineWidth = 40;
-              ctx.stroke();
-              ctx.beginPath();
-              ctx.arc(
-                center.x,
-                center.y,
-                radius,
-                -0.5 * Math.PI,
-                (2 * progress - 0.5) * Math.PI
-              );
-              ctx.strokeStyle = "#ccc"; // colore da cambiare! per il cerchio di progresso
-              ctx.lineWidth = 40;
-              ctx.stroke();
-      
-              //countdown dei secondi all'interno del cerchio
-              ctx.font = "60px sans-serif";
-              ctx.fillStyle = "white";
-              ctx.textAlign = "center";
-              ctx.textBaseline = "middle";
-              ctx.fillText(Math.ceil(remaningTime / 1000), center.x, center.y);
-              ctx.font = "12px sans-serif";
-              ctx.fillText("REMAINING", center.x, center.y + 42);
-              ctx.font = "15px sans-serif";
-              ctx.fillText("SECONDS", center.x, center.y - 45); 
-              
-            }
-      
-            //funzione per aggiornare il countdown
-            function updateCountdown() {
-              let currentTime = Date.now();
-              let elapsedTime = currentTime - startTime;
-              remaningTime = Math.max(countdownDuration - elapsedTime, 0);
-              let progress = 1 - remaningTime / countdownDuration;
-              drawCircle(progress);
-      
-              if (remaningTime > 0) {
-                animationId = requestAnimationFrame(updateCountdown);
-              }
-            }
-            //funzione per avviare il countdown
-            function startCountdown() {
-              startTime = Date.now();
-              updateCountdown();
-            }
-            // Funzione per passare alla prossima domanda e avviare un nuovo countdown
-function onCountdownEnd() {
-  // Passa alla prossima domanda
-  risposteEsistenti.forEach((answer) => answer.remove());
-  currentQuestionIndex++;
-  console.log(currentQuestionIndex);
-
-  if (currentQuestionIndex <= 9) {
-    contatore.innerHTML = parseInt(currentQuestionIndex + 1);
-  }
-
-  if (currentQuestionIndex < questions.length) {
-    // Se ci sono ancora domande, mostra la prossima domanda
-    showQuestion();
-    // Reimposta il countdown
-    remaningTime = countdownDuration;
-    startTime = Date.now();
-    updateCountdown();
-  } else {
-    // Altrimenti, mostra un messaggio di fine quiz
-    // Andiamo a salvare in ucassetto del browser il nostro valore
-    sessionStorage.setItem("score", score);
-    window.location.href = "score.html";
-  }
-}
-
-
-
-function startCountdown() {
-  startTime = Date.now();
-  updateCountdown();
-}
-      
-           
-          </script>
+        <div id="app"></div>
     </header>
 
     <div class="container">
@@ -128,7 +22,7 @@ function startCountdown() {
     </div>
 
     <footer class="center">
-        <h3 id="counter">Question  <span id="question-number">1</span> <span>/ 10</span></h3>
+        <h3 id="counter">QUESTION  <span id="question-number">1</span> <span>/ 10</span></h3>
     </footer>
 
 </body>
