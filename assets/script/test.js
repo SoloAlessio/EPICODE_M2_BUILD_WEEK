@@ -182,7 +182,7 @@ function generateQuestions() {
 
 };
 
-const FULL_DASH_ARRAY = 283;
+const FULL_DASH_ARRAY = 273;
 const WARNING_THRESHOLD = 10;
 const ALERT_THRESHOLD = 5;
 

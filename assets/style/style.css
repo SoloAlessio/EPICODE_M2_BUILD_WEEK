@@ -166,6 +166,9 @@ footer button {
     color: #fff;
     margin-left: 8px;
 }
+#counter{
+    font-weight: 500;
+}
 
 #counter span {
     color: #d20094;
