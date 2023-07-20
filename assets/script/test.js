@@ -100,97 +100,93 @@ const questions = [
 
 
 let score = 0;
+let currentQuestionIndex = 0;
+let risposteEsistenti = null;
 
-// Definizione della funzione generateQuestions
+function showQuestion() {
+
+  const domanda = questions[currentQuestionIndex];
+  const answers = [domanda.correct_answer, ...domanda.incorrect_answers];
+  const contatore = document.getElementById("question-number");
+  const griglia = document.getElementById("griglia");
+  const titolo = document.getElementById("question");
+
+  shuffle(answers)
+
+  titolo.innerText = domanda.question;
+
+  // Ottieni le risposte (corrette e sbagliate)
+  for (let i = 0; i < answers.length; i++) {
+    let risposta = document.createElement('button');
+    risposta.classList.add("risposta");
+    risposta.textContent = answers[i];
+    griglia.appendChild(risposta);
+  }
+
+  risposteEsistenti = document.querySelectorAll(".risposta");
+
+  // Mostra le risposte sui pulsanti
+  answers.forEach((answer, index) => {
+    const answerButton = risposteEsistenti[index];
+    answerButton.onclick = function () {
+      // Controlla se la risposta Ã¨ corretta e mostra un messaggio di allerta appropriato
+      if (answer === domanda.correct_answer) {
+        score++;
+      } else {
+
+      }
+      // Passa alla prossima domanda
+      risposteEsistenti.forEach(answer => answer.remove());
+      currentQuestionIndex++;
+      console.log(currentQuestionIndex);
+
+      if (currentQuestionIndex <= 9) {
+        contatore.innerHTML = parseInt(currentQuestionIndex + 1);
+      }
+
+      if (currentQuestionIndex < questions.length) {
+        // Se ci sono ancora domande, mostra la prossima domanda
+        showQuestion();
+        //reimposta countdown
+      } else {
+        // Altrimenti, mostra un messaggio di fine quiz
+        // Andiamo  a salvare in ucassetto del browser il nostro valore 
+        sessionStorage.setItem("score", score)
+        window.location.href = "score.html";
+      }
+
+    };
+
+  });
+
+}
+
+function shuffle(answers) {
+  let currentIndex = answers.length, randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [answers[currentIndex], answers[randomIndex]] = [
+      answers[randomIndex], answers[currentIndex]];
+  }
+
+  return answers;
+}
+
+function generateQuestions() {
+
+  showQuestion();
+
+};
+
+
 window.onload = function () {
-
-  function generateQuestions() {
-
-    const griglia = document.getElementById("griglia");
-    const titolo = document.getElementById("question");
-    const contatore = document.getElementById("question-number");
-    let currentQuestionIndex = 0;
-    let risposteEsistenti = null;
-
-    // Funzione per mostrare una domanda e le risposte corrispondenti
-    function showQuestion() {
-      // Ottieni la domanda corrente
-      const domanda = questions[currentQuestionIndex];
-      const answers = [domanda.correct_answer, ...domanda.incorrect_answers];
-
-      function shuffle(answers) {
-        let currentIndex = answers.length, randomIndex;
-    
-        // While there remain elements to shuffle.
-        while (currentIndex != 0) {
-    
-          // Pick a remaining element.
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex--;
-    
-          // And swap it with the current element.
-          [answers[currentIndex], answers[randomIndex]] = [
-            answers[randomIndex], answers[currentIndex]];
-        }
-    
-        return answers;
-      }
-
-      // Mostra la domanda
-      titolo.innerText = domanda.question;
-      shuffle(answers)
-
-      // Ottieni le risposte (corrette e sbagliate)
-      for (let i = 0; i < answers.length; i++) {
-        let risposta = document.createElement('button');
-        risposta.classList.add("risposta");
-        risposta.textContent = answers[i];
-        griglia.appendChild(risposta);
-      }
-
-      risposteEsistenti = document.querySelectorAll(".risposta");
-
-      // Mostra le risposte sui pulsanti
-      answers.forEach((answer, index) => {
-        const answerButton = risposteEsistenti[index];
-        answerButton.onclick = function () {
-          // Controlla se la risposta Ã¨ corretta e mostra un messaggio di allerta appropriato
-          if (answer === domanda.correct_answer) {
-            score++;
-          } else {
-
-          }
-          // Passa alla prossima domanda
-          risposteEsistenti.forEach(answer => answer.remove());
-          currentQuestionIndex++;
-          
-          if (currentQuestionIndex <= 9){
-            contatore.innerHTML = parseInt(currentQuestionIndex + 1);
-          }
-
-          if (currentQuestionIndex < questions.length) {
-            // Se ci sono ancora domande, mostra la prossima domanda
-            showQuestion();
-          } else {
-            // Altrimenti, mostra un messaggio di fine quiz
-            // Andiamo  a salvare in ucassetto del browser il nostro valore 
-            sessionStorage.setItem("score", score)
-
-            // dallaltra parte
-
-            window.location.href = "score.html";
-          }
-
-        };
-
-      });
-
-    }
-
-    // Mostra la prima domanda
-    showQuestion();
-
-  };
 
   generateQuestions();
 

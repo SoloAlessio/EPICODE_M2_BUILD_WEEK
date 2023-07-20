@@ -28,7 +28,7 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     height: 48px;
     margin-bottom: 6rem;
 }
@@ -124,6 +124,23 @@ footer button {
     grid-template: 100px 100px / 400px 400px;
     gap: 48px;
     justify-content: center;
+}
+
+.timer{
+    position: relative;
+}
+.timer-text{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 10px solid #fff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
 }
 
 .container {
