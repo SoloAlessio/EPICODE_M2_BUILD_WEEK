@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CountDown</title>
+    <style>
+      canvas{
+        border: 1px solid transparent;
+        border-radius: 50%;
+        background-color: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="countdownCanvas" width="200" height="200"></canvas>
+    <!--area cerchio -->
+    <script>
+      //variabili
+      const canvas = document.getElementById("countdownCanvas");
+      const ctx = canvas.getContext("2d"); //variabile che ci permette di disegnare sul cerchio
+      const radius = canvas.width / 2; //raggio del cerchio
+      const center = { x: canvas.width / 2, y: canvas.height / 2 }; //coordinate del cerchio
+      const second = 60; //countdown
+      const countdownDuration = 1000 * second; //totale countdown
+      let remaningTime = countdownDuration; //tempo che rimane del countdown
+      let animationId;
+      let startTime = 0;
+
+      //funzione del cerchio
+      function drawCircle(progress) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        //disegno del cerchio
+        ctx.beginPath();
+        ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+        ctx.strokeStyle = "#ccc";
+        ctx.lineWidth = 40;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(
+          center.x,
+          center.y,
+          radius,
+          -0.5 * Math.PI,
+          (2 * progress - 0.5) * Math.PI
+        );
+        ctx.strokeStyle = "#00FFFF"; // colore da cambiare! per il cerchio di progresso
+        ctx.lineWidth = 40;
+        ctx.stroke();
+
+        //countdown dei secondi all'interno del cerchio
+        ctx.font = "60px sans-serif";
+        ctx.fillStyle = "green";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(Math.ceil(remaningTime / 1000), center.x, center.y);
+        ctx.font = "12px sans-serif";
+        ctx.fillText("REMAINING", center.x, center.y + 42);
+        ctx.font = "15px sans-serif";
+        ctx.fillText("SECONDS", center.x, center.y - 45); 
+        
+      }
+
+      //funzione per aggiornare il countdown
+      function updateCountdown() {
+        let currentTime = Date.now();
+        let elapsedTime = currentTime - startTime;
+        remaningTime = Math.max(countdownDuration - elapsedTime, 0);
+        let progress = 1 - remaningTime / countdownDuration;
+        drawCircle(progress);
+
+        if (remaningTime > 0) {
+          animationId = requestAnimationFrame(updateCountdown);
+        }
+      }
+      //funzione per avviare il countdown
+      function startCountdown() {
+        startTime = Date.now();
+        updateCountdown();
+      }
+
+      //avvio il countdown al caricamento della pagina
+      window.onload = startCountdown();
+    </script>
+  </body>
+</html>
