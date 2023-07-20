@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/style/style.css">
     <title>BUILD WEEK</title>
-    <script src="assets/script/mainScript.js"></script>
-    
+    <script>
+        window.onload = function () {
+            const checkbox = document.querySelector("input[type=checkbox]");
+            const proceedButton = document.querySelector("#procedi");
+
+            proceedButton.disabled = true; // disabilita il pulsante all'avvio
+
+            checkbox.onchange = function () { // evento che si attiva quando lo stato della checkbox cambia
+                proceedButton.disabled = !this.checked; // abilita il pulsante se la checkbox è selezionata, altrimenti lo disabilita
+            };
+
+            proceedButton.onclick = function () { // evento che si attiva quando il pulsante viene cliccato
+                window.location.href = "test.html"; // reindirizza a pagina domande
+            };
+        }
+    </script>
 </head>
+
 <body>
     <header>
-        <a href="index.html"><img src="assets/images/assets/epicode_logo.png" class="logo"></img></a>    
+        <a href="index.html"><img src="assets/images/assets/epicode_logo.png" class="logo"></img></a>
     </header>
 
     <main>
@@ -22,11 +38,14 @@
         </h3>
         <div class="description">
             <p>
-                We don't expect most engineers to know the answers to all of these </br>questions, so don't worry if you're unsure of a few of them
+                We don't expect most engineers to know the answers to all of these </br>questions, so don't worry if
+                you're unsure of a few of them
             </p>
             <ul class="rules">
-                <li>Each question is <span class="bold">timed</span> and can only be <span class="bold">answered once.</span></li>
-                <li>Changing browser tab or opening other windows will <span class="bold">invalidate the question.</span></li>
+                <li>Each question is <span class="bold">timed</span> and can only be <span class="bold">answered
+                        once.</span></li>
+                <li>Changing browser tab or opening other windows will <span class="bold">invalidate the
+                        question.</span></li>
                 <li>This exam will take aprox. <span class="bold">5-10 minutes.</span></li>
             </ul>
         </div>
@@ -41,4 +60,5 @@
     </footer>
 
 </body>
+
 </html>
