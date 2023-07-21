@@ -1,3 +1,4 @@
+// Dichiarazione array di domande
 const questions = [
   {
     category: "Science: Computers",
@@ -99,55 +100,50 @@ const questions = [
 ];
 
 
-let score = 0;
-let currentQuestionIndex = 0;
-let risposteEsistenti = null;
+let score = 0; // dichiarazione variabile punteggio
+let currentQuestionIndex = 0; // dichiarazione index della domanda
+let risposteEsistenti = null; // dichiarazione variabile risposte in cui andranno le risposte
 
 
 function showQuestion() {
-  const domanda = questions[currentQuestionIndex];
-  const answers = [domanda.correct_answer, ...domanda.incorrect_answers];
-  const griglia = document.getElementById("griglia");
-  const titolo = document.getElementById("question");
-  const contatore = document.getElementById("question-number");
+  const domanda = questions[currentQuestionIndex]; // dichiarazione costante array domande
+  const answers = [domanda.correct_answer, ...domanda.incorrect_answers]; // dichiarazione costante array risposte
+  const griglia = document.getElementById("griglia"); // costante griglia contente risposte
+  const titolo = document.getElementById("question"); // costante titolo contente titolo domanda
+  const contatore = document.getElementById("question-number"); // costante contatore numero domanda per il footer
 
-  shuffle(answers)
+  shuffle(answers) // richiama funzione e mischia le domande
 
-  titolo.innerText = domanda.question;
-  contatore.innerHTML = currentQuestionIndex + 1;
+  titolo.innerText = domanda.question; // imposta il contenuto del titolo della domanda dall'array domanda
+  contatore.innerHTML = currentQuestionIndex + 1; // imposta il valore di domanda del footer
 
-  // Ottieni le risposte (corrette e sbagliate)
+  // Ciclo crea domande
   for (let i = 0; i < answers.length; i++) {
-    let risposta = document.createElement('button');
-    risposta.classList.add("risposta");
-    risposta.textContent = answers[i];
-    griglia.appendChild(risposta);
+    let risposta = document.createElement('button'); // Crea le domande
+    risposta.classList.add("risposta"); // aggiunge la classe "risposta"
+    risposta.textContent = answers[i]; // assegna il contenuto dell'array answers alla risposta
+    griglia.appendChild(risposta); // posiziona la risposta nell'HTML
   }
 
-  risposteEsistenti = document.querySelectorAll(".risposta");
+  risposteEsistenti = document.querySelectorAll(".risposta"); // seleziona tutte le risposte in griglia con la classe "risposta"
 
-  // Mostra le risposte sui pulsanti
-  answers.forEach((answer, index) => {
-    const answerButton = risposteEsistenti[index];
-    answerButton.onclick = function () {
-      // Controlla se la risposta Ã¨ corretta
-      if (answer === domanda.correct_answer) {
-        score++;
+  answers.forEach((answer, index) => { // Ciclo forEach
+    const answerButton = risposteEsistenti[index]; // imposta answersButton su la risposta con l'index indicato
+    answerButton.onclick = function () { // Funzione che si attiva al click su una delle risposte esistenti
+
+      if (answer === domanda.correct_answer) { // controlla se la risposta data è corretta
+        score++; // aumenta il punteggio
       } 
-      // Passa alla prossima domanda
-      risposteEsistenti.forEach(answer => answer.remove());
 
-      if (currentQuestionIndex < questions.length - 1) {
-        // Se ci sono ancora domande, mostra la prossima domanda
-        currentQuestionIndex++;
-        showQuestion();
-        clearTime();
-        //reimposta countdown
-      } else {
-        // Altrimenti, mostra un messaggio di fine quiz
-        // Andiamo  a salvare in ucassetto del browser il nostro valore 
-        sessionStorage.setItem("score", score)
-        window.location.href = "score.html";
+      risposteEsistenti.forEach(answer => answer.remove()); // cancella le risposte a cui è già stata data risposta
+
+      if (currentQuestionIndex < questions.length - 1) { // entra se ci sono altre domande
+        currentQuestionIndex++; // aumenta l'indice della domanda
+        showQuestion(); // richiama la funzione per creare prossime risposte
+        clearTime(); // resetta il timer
+      } else { // se non ci sono altre domande 
+        sessionStorage.setItem("score", score) // recupera lo score e lo esporta al file "score.html"
+        window.location.href = "score.html"; // reinderizza verso "score.html"
       }
 
     };
@@ -156,17 +152,14 @@ function showQuestion() {
 
 }
 
-function shuffle(answers) {
+function shuffle(answers) { // funzione che mischia le risposte per renderle casuali
   let currentIndex = answers.length, randomIndex;
 
-  // While there remain elements to shuffle.
   while (currentIndex != 0) {
 
-    // Pick a remaining element.
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
-    // And swap it with the current element.
     [answers[currentIndex], answers[randomIndex]] = [
       answers[randomIndex], answers[currentIndex]];
   }
@@ -245,8 +238,9 @@ function setCircleDasharray() {
     .setAttribute("stroke-dasharray", circleDasharray);
 }
 
-window.onload = function () {
+window.onload = function () { // funzione che si carica al caricamento della pagina
 
+  // crea elementi per il timer nell'HTML
   document.getElementById("app").innerHTML = `
 <div class="base-timer">
   <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
