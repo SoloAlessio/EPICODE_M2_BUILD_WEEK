@@ -105,8 +105,6 @@ let risposteEsistenti = null;
 
 
 function showQuestion() {
-  console.log(currentQuestionIndex);
-
   const domanda = questions[currentQuestionIndex];
   const answers = [domanda.correct_answer, ...domanda.incorrect_answers];
   const griglia = document.getElementById("griglia");
